@@ -15,7 +15,13 @@ from typing import Any, Optional
 
 import requests
 import urllib3
-from dotenv import load_dotenv
+
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
 
 # Local Windows SSL / corporate proxy environments often fail certificate verification.
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -685,8 +691,7 @@ def write_output(path: Path, rows: list[dict[str, Any]]) -> None:
 
 
 def main() -> int:
-    load_dotenv()
-    api_key = os.getenv("KEEPA_API_KEY")
+    api_key = os.environ.get("KEEPA_API_KEY")
     if not api_key:
         log.error("KEEPA_API_KEY is not set. Add it to your environment or .env file.")
         return 1
