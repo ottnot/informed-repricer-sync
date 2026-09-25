@@ -677,12 +677,11 @@ def process_row(row: dict[str, str], client: KeepaClient) -> Optional[dict[str, 
         "SKU": sku,
         "MARKETPLACE_ID": marketplace_id,
         "MIN_PRICE": f"{round(new_min, 2):.2f}",
-        "MAX_PRICE": f"{abs_max:.2f}",
     }
 
 
 def write_output(path: Path, rows: list[dict[str, Any]]) -> None:
-    fieldnames = ["SKU", "MARKETPLACE_ID", "MIN_PRICE", "MAX_PRICE"]
+    fieldnames = ["SKU", "MARKETPLACE_ID", "MIN_PRICE"]
     with path.open("w", newline="", encoding="utf-8") as fh:
         writer = csv.DictWriter(fh, fieldnames=fieldnames)
         writer.writeheader()
